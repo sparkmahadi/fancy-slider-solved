@@ -20,6 +20,7 @@ const showImages = (images) => {
   // show gallery title
   galleryHeader.style.display = 'flex';
   images.forEach(image => {
+    // console.log(image)
     let div = document.createElement('div');
     div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2';
     div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
@@ -31,11 +32,12 @@ const showImages = (images) => {
 const getImages = (query) => {
   fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
-    .then(data => showImages(data.hitS))
+    .then(data => showImages(data.hits))
     .catch(err => console.log(err))
 }
 
 let slideIndex = 0;
+
 const selectItem = (event, img) => {
   let element = event.target;
   element.classList.add('added');
@@ -47,7 +49,8 @@ const selectItem = (event, img) => {
     alert('Hey, Already added !')
   }
 }
-var timer
+
+var timer;
 const createSlider = () => {
   // check slider image length
   if (sliders.length < 2) {
@@ -68,7 +71,13 @@ const createSlider = () => {
   // hide image aria
   imagesArea.style.display = 'none';
   const duration = document.getElementById('duration').value || 1000;
+  // // const duration = document.getElementById('duration').value;
+  // console.log(duration)
+  // if(duration = ''){
+  //   duration = 1000
+  // }
   sliders.forEach(slide => {
+    console.log(slide)
     let item = document.createElement('div')
     item.className = "slider-item";
     item.innerHTML = `<img class="w-100"
